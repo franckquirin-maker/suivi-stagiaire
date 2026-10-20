@@ -62,14 +62,14 @@ INSERT INTO users (nom, prenom, email, hashpassword)
 VALUES ('Dupont', 'Jean', 'jean.dupont@example.com', '<hash généré ci-dessus>');
 ```
 
-## Choix techniques notables
+## Choix techniques 
 
 - **MVC fait main** : pas de Composer ni de framework. Un autoloader PSR-4 minimal (`src/autoload.php`) charge les classes du namespace `App\`.
 - **Sessions PHP** pour l'authentification (pas de JWT). Le cookie de session est configuré en `SameSite=Lax`, ce qui fonctionne en dev car front (`:5173`) et back (`:8080`) sont sur le même "site" (`localhost`), seul le port diffère. **En production**, si front et back sont sur des domaines réellement différents, il faudra passer en `SameSite=None; Secure` (HTTPS obligatoire).
 - **Héritage de table** `evenements` → `retard` / `absence` : la création d'un événement se fait dans une transaction SQL (voir `EvenementController::store`) pour garantir que la table mère et la table fille restent cohérentes.
 - **`type_ev`** est une table de référence libre, pensée pour des sous-catégories (ex. "Retard transport", "Absence maladie") indépendantes de la distinction technique retard/absence.
 
-## Prochaines étapes suggérées
+## Prochaines étapes 
 
 - Écrans React : connexion, liste des promos/stagiaires, formulaire de déclaration d'un retard/absence, calcul et affichage du taux d'absence par stagiaire par rapport à `pourcentage_max_absence`.
 - Validation des données côté backend (champs obligatoires, formats de date...).
